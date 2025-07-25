@@ -6,19 +6,21 @@ import { MongoClient, ObjectId } from 'mongodb';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import Joi from 'joi';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:3000",
-    methods: ["GET", "POST"]
+    methods: ["GET", "POST", "PUT", "DELETE"]
   }
 });
 
 // MongoDB connection
-const MONGODB_URI = "mongodb+srv://farazabdullah267:SjgRgW3SlAAa05Rl@project.ifut3ay.mongodb.net/";
-const JWT_SECRET = "your-secret-key";
+const MONGODB_URI = process.env.MONGODB_URI;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 let db;
 
@@ -181,7 +183,7 @@ app.get('/api/users', authenticateToken, async (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  res.send('🚀 Chat API is running!');
+  res.send('🚀 Chat API is running Successfully!');
 });
 
 // Update user profile
